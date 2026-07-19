@@ -58,8 +58,7 @@ export function TestimonialSection({ activeSection }: { activeSection: string })
                 <div className="relative z-10">
                   <div className="flex items-center gap-4">
                     <div className="h-14 w-14 overflow-hidden rounded-full bg-slate-300">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={`https://i.pravatar.cc/150?u=${idx+10}`} alt={testi.name} className="h-full w-full object-cover" />
+                      <img src={`https://i.pravatar.cc/150?u=${idx+10}`} alt={testi.name} className="h-full w-full object-cover" />
                     </div>
                     <div>
                       <h4 className="text-lg font-black">{testi.name}</h4>

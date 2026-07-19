@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BarChart3, CheckCircle2, ClipboardList, Lock, Radar, RefreshCcw, Target } from "lucide-react";
 import { Panel } from "@/components/portal/ui";
-type HrisTier = "starter" | "growth" | "business" | "enterprise";
+import type { HrisTier } from "../../professional-services/hris/HrisPortal";
 import type { PortalPage, PortalRole } from "../../../portalTypes";
 import { SocialIntelMetricCard } from "./components/SocialIntelMetricCard";
 import { fallbackSocialSnapshot, fetchSocialSnapshot, type SocialSnapshot } from "./socialCommerceApi";
@@ -25,7 +25,8 @@ const metricIcons = [Target, Radar, BarChart3, ClipboardList];
 
 function toSocialTier(tier: HrisTier): SocialCommerceTier {
   if (tier === "enterprise") return "enterprise";
-    if (tier === "growth") return "growth";
+  if (tier === "pro") return "pro";
+  if (tier === "growth") return "growth";
   return "starter";
 }
 

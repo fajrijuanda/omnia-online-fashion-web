@@ -1,6 +1,6 @@
 import { RoundedSelect } from "@/components/portal/ui";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AlertTriangle, CheckCircle2, Circle, Lock, Plus, RefreshCcw, SlidersHorizontal, PlayCircle, BarChart, TrendingUp, Calendar, ArrowRight, Download, Share2, Settings2, ShieldCheck, Mail } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Circle, Lock, Plus, RefreshCcw, SlidersHorizontal } from "lucide-react";
 import { Panel, SimpleTable } from "@/components/portal/ui";
 import {
   liveSignals,
@@ -247,228 +247,20 @@ function LiveCockpitWorkspace() {
 }
 
 function AdRadarWorkspace() {
-  const ads = [
-    { title: "Hook before-after serum", status: "Scaling", watchRate: "45%", cpa: "Rp12.000", roas: "4.2x", trend: "up" },
-    { title: "CTA diskon bundling", status: "Fatigue", watchRate: "12%", cpa: "Rp45.000", roas: "1.1x", trend: "down" },
-    { title: "Format split-screen demo", status: "Testing", watchRate: "38%", cpa: "Rp18.000", roas: "2.8x", trend: "up" },
-    { title: "Creator unboxing POV", status: "Stable", watchRate: "28%", cpa: "Rp22.000", roas: "2.1x", trend: "up" }
-  ];
-
-  return (
-    <Panel className="p-4 sm:p-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-pink-600">Ad creative radar</p>
-          <h2 className="mt-1 text-2xl font-black text-[#172033]">Creative Performance Matrix</h2>
-          <p className="mt-1 text-sm font-bold leading-6 text-slate-500">Mendeteksi ad fatigue dan winning formula secara real-time dari TikTok dan Meta.</p>
-        </div>
-        <button className="inline-flex w-fit items-center gap-2 rounded-full bg-[#172033] px-4 py-2 text-xs font-black text-white" type="button">
-          <Plus className="h-4 w-4" /> Tracker baru
-        </button>
-      </div>
-      
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {ads.map((ad, i) => (
-          <article key={i} className="rounded-[18px] border border-slate-100 bg-white p-4 shadow-sm">
-            <div className="flex items-center justify-between">
-              <span className={`rounded-full px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.1em] ${ad.status === 'Scaling' ? 'bg-emerald-50 text-emerald-600' : ad.status === 'Fatigue' ? 'bg-rose-50 text-rose-600' : 'bg-cyan-50 text-cyan-700'}`}>
-                {ad.status}
-              </span>
-              {ad.trend === 'up' ? <TrendingUp className="h-4 w-4 text-emerald-500" /> : <TrendingUp className="h-4 w-4 text-rose-500 rotate-180" />}
-            </div>
-            <h3 className="mt-4 text-base font-black leading-tight text-[#172033]">{ad.title}</h3>
-            
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <div className="rounded-[12px] bg-slate-50 p-2 text-center">
-                <p className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">Watch rate</p>
-                <p className="mt-1 text-sm font-black text-[#172033]">{ad.watchRate}</p>
-              </div>
-              <div className="rounded-[12px] bg-slate-50 p-2 text-center">
-                <p className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">ROAS</p>
-                <p className="mt-1 text-sm font-black text-[#172033]">{ad.roas}</p>
-              </div>
-            </div>
-            
-            <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
-              <span className="text-xs font-bold text-slate-500">CPA: {ad.cpa}</span>
-              <button className="grid h-8 w-8 place-items-center rounded-full bg-slate-100 text-slate-600 hover:bg-pink-50 hover:text-pink-600" type="button"><PlayCircle className="h-4 w-4" /></button>
-            </div>
-          </article>
-        ))}
-      </div>
-    </Panel>
-  );
+  return <SimpleBoard title="Ad creative radar" items={["Hook before-after sedang naik", "CTA diskon bundling mulai fatigue", "Format split-screen mendapat watch rate lebih tinggi"]} />;
 }
 
 function CampaignPlannerWorkspace() {
-  const campaigns = [
-    { name: "Serum mini test", target: "ROAS 2.5x", budget: "Rp1.500.000", creators: 3, status: "Active", progress: 65 },
-    { name: "Payday Mega Sale", target: "GMV Rp50jt", budget: "Rp15.000.000", creators: 12, status: "Draft", progress: 0 },
-    { name: "Portable blender demo", target: "CPA < Rp38k", budget: "Rp5.000.000", creators: 5, status: "Completed", progress: 100 }
-  ];
-
-  return (
-    <Panel className="p-4 sm:p-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-pink-600">Campaign planner</p>
-          <h2 className="mt-1 text-2xl font-black text-[#172033]">Marketing Action Plan</h2>
-          <p className="mt-1 text-sm font-bold leading-6 text-slate-500">Rencanakan budget, target metric, dan eksekusi creator untuk campaign terpadu.</p>
-        </div>
-        <button className="inline-flex w-fit items-center gap-2 rounded-full bg-pink-600 px-5 py-2.5 text-sm font-black text-white" type="button">
-          <Plus className="h-4 w-4" /> Buat Campaign
-        </button>
-      </div>
-
-      <div className="mt-6 flex flex-col gap-3">
-        {campaigns.map((camp, i) => (
-          <article key={i} className="flex flex-col gap-4 rounded-[18px] border border-slate-100 bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
-            <div className="flex items-center gap-4 md:w-1/3">
-              <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-[16px] ${camp.status === 'Active' ? 'bg-pink-50 text-pink-600' : camp.status === 'Completed' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
-                <Calendar className="h-5 w-5" />
-              </span>
-              <div>
-                <h3 className="text-base font-black text-[#172033]">{camp.name}</h3>
-                <span className={`mt-1 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-[0.1em] ${camp.status === 'Active' ? 'bg-pink-100 text-pink-700' : camp.status === 'Completed' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500'}`}>
-                  {camp.status}
-                </span>
-              </div>
-            </div>
-            
-            <div className="flex flex-1 items-center gap-6">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">Budget</p>
-                <p className="mt-1 text-sm font-black text-[#172033]">{camp.budget}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">Target</p>
-                <p className="mt-1 text-sm font-black text-[#172033]">{camp.target}</p>
-              </div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">Creators</p>
-                <p className="mt-1 text-sm font-black text-[#172033]">{camp.creators} orang</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 md:w-1/4">
-              <div className="flex-1">
-                <div className="flex items-center justify-between text-[10px] font-black text-slate-500">
-                  <span>Progress</span>
-                  <span>{camp.progress}%</span>
-                </div>
-                <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                  <div className={`h-full rounded-full ${camp.status === 'Active' ? 'bg-pink-500' : 'bg-emerald-500'}`} style={{ width: `${camp.progress}%` }} />
-                </div>
-              </div>
-              <button className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-slate-200 text-slate-600 transition hover:bg-slate-50 hover:text-pink-600" type="button">
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </article>
-        ))}
-      </div>
-    </Panel>
-  );
+  return <SimpleBoard title="Campaign planner" items={["Serum mini test: 3 creator, 2 script, Rp1,5jt budget", "Cable organizer: demo desk setup, 5 hari", "Portable blender: stop jika CPA > Rp38rb"]} />;
 }
 
 function ExperimentBoardWorkspace({ snapshot }: { snapshot: SocialSnapshot }) {
-  return (
-    <Panel className="p-4 sm:p-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-pink-600">Experiment board</p>
-          <h2 className="mt-1 text-2xl font-black text-[#172033]">A/B Testing & Insights</h2>
-        </div>
-        <button className="inline-flex w-fit items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-black text-slate-600 shadow-sm" type="button">
-          <Plus className="h-4 w-4" /> New Experiment
-        </button>
-      </div>
-      
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        {snapshot.experiments.map((exp, index) => (
-          <article key={index} className="rounded-[20px] border border-slate-100 bg-slate-50 p-5">
-            <div className="flex items-start justify-between">
-              <h3 className="text-lg font-black leading-tight text-[#172033]">{exp.title}</h3>
-              <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.1em] ${exp.status === 'running' ? 'bg-cyan-100 text-cyan-700' : exp.status === 'concluded' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-600'}`}>
-                {exp.status}
-              </span>
-            </div>
-            
-            <div className="mt-4 rounded-[14px] bg-white p-3 shadow-sm">
-              <p className="text-[10px] font-black uppercase tracking-[0.1em] text-slate-400">Target Metric</p>
-              <p className="mt-1 text-base font-black text-[#172033]">{exp.targetMetric ?? "TBD"}</p>
-            </div>
-            
-            <div className="mt-4 text-sm font-bold leading-6 text-slate-600">
-              <p><span className="mr-2 inline-block h-2 w-2 rounded-full bg-pink-500"></span><strong className="text-[#172033]">Variant A:</strong> Control group / Baseline</p>
-              <p className="mt-1"><span className="mr-2 inline-block h-2 w-2 rounded-full bg-cyan-500"></span><strong className="text-[#172033]">Variant B:</strong> Treatment group</p>
-            </div>
-            
-            {exp.status === 'concluded' && (
-              <div className="mt-4 flex items-center gap-2 rounded-[12px] bg-emerald-50 p-3 text-sm font-bold text-emerald-700">
-                <CheckCircle2 className="h-4 w-4" /> Variant B memenangkan {exp.targetMetric} dengan uplift 14%.
-              </div>
-            )}
-            {exp.status === 'running' && (
-              <div className="mt-4 flex items-center gap-2 rounded-[12px] bg-cyan-50 p-3 text-sm font-bold text-cyan-700">
-                <RefreshCcw className="h-4 w-4 animate-spin" /> Mengumpulkan data statistik (confidence 82%).
-              </div>
-            )}
-          </article>
-        ))}
-      </div>
-    </Panel>
-  );
+  return <SimpleBoard title="Experiment board" items={snapshot.experiments.map((item) => `${item.status}: ${item.title} (${item.targetMetric ?? "metric TBD"})`)} />;
 }
 
 function ReportsWorkspace({ snapshot }: { snapshot: SocialSnapshot }) {
-  return (
-    <Panel className="p-4 sm:p-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-pink-600">Automated reports</p>
-          <h2 className="mt-1 text-2xl font-black text-[#172033]">Client & Management Reports</h2>
-          <p className="mt-1 text-sm font-bold leading-6 text-slate-500">Generate report komprehensif dalam satu klik untuk stakeholder.</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <button className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-xs font-black text-slate-600" type="button">
-            <Share2 className="h-4 w-4" /> Share Link
-          </button>
-          <button className="inline-flex items-center gap-2 rounded-full bg-pink-600 px-4 py-2 text-xs font-black text-white" type="button">
-            <Download className="h-4 w-4" /> Export PDF
-          </button>
-        </div>
-      </div>
-      
-      <div className="mt-6 grid gap-4 lg:grid-cols-2">
-        {snapshot.reports.map((report, idx) => (
-          <article key={idx} className="flex flex-col justify-between rounded-[20px] border border-slate-100 bg-white p-5 shadow-sm">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-pink-50 text-pink-600">
-                  <BarChart className="h-5 w-5" />
-                </div>
-                <h3 className="text-lg font-black text-[#172033]">{report.title}</h3>
-              </div>
-              <p className="mt-4 text-sm font-bold leading-6 text-slate-500">{report.summary}</p>
-              
-              <div className="mt-4 flex flex-wrap gap-2">
-                {report.sections.map((section, sidx) => (
-                  <span key={sidx} className="rounded-[10px] bg-slate-50 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.1em] text-slate-500">
-                    {section}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            <button className="mt-6 w-full rounded-[14px] bg-slate-100 py-2.5 text-xs font-black text-slate-600 transition hover:bg-slate-200" type="button">
-              Preview Report
-            </button>
-          </article>
-        ))}
-      </div>
-    </Panel>
-  );
+  const report = snapshot.reports[0];
+  return <SimpleBoard title={report?.title ?? "Automated client report"} items={report?.sections ?? []} caption={report?.summary} />;
 }
 
 function AlertsWorkspace({ snapshot }: { snapshot: SocialSnapshot }) {
@@ -516,80 +308,13 @@ function ConnectorsWorkspace({ snapshot, refreshSnapshot }: { snapshot: SocialSn
 }
 
 function SettingsWorkspace({ snapshot }: { snapshot: SocialSnapshot }) {
-  return (
-    <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-      <Panel className="p-4 sm:p-5">
-        <div className="flex items-center gap-3">
-          <Settings2 className="h-6 w-6 text-pink-600" />
-          <h2 className="text-2xl font-black text-[#172033]">Workspace settings</h2>
-        </div>
-        <p className="mt-2 text-sm font-bold leading-6 text-slate-500">Konfigurasi environment dan data source untuk social commerce engine.</p>
-        
-        <div className="mt-6 grid gap-4">
-          <label className="block rounded-[16px] border border-slate-100 bg-slate-50 p-4">
-            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Target Market</span>
-            <select className="mt-2 w-full bg-transparent text-base font-black text-[#172033] outline-none">
-              <option>{snapshot.settings?.market ?? "Indonesia"}</option>
-              <option>Malaysia</option>
-              <option>Singapore</option>
-            </select>
-          </label>
-          <label className="block rounded-[16px] border border-slate-100 bg-slate-50 p-4">
-            <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Industry Preset</span>
-            <select className="mt-2 w-full bg-transparent text-base font-black text-[#172033] outline-none">
-              <option>{snapshot.settings?.preset ?? "Beauty & skincare"}</option>
-              <option>Fashion & Apparel</option>
-              <option>Electronics</option>
-            </select>
-          </label>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-[16px] border border-slate-100 bg-slate-50 p-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Data Mode</span>
-              <p className="mt-2 text-sm font-black text-[#172033]">{snapshot.settings?.dataMode ?? snapshot.dataMode}</p>
-            </div>
-            <div className="rounded-[16px] border border-slate-100 bg-slate-50 p-4">
-              <span className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Refresh Rate</span>
-              <p className="mt-2 text-sm font-black text-[#172033]">{snapshot.settings?.refreshMode ?? "Hourly"}</p>
-            </div>
-          </div>
-        </div>
-      </Panel>
-      
-      <div className="grid gap-4">
-        <Panel className="p-4 sm:p-5">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="h-5 w-5 text-cyan-600" />
-            <h3 className="text-lg font-black text-[#172033]">Role Permissions</h3>
-          </div>
-          <div className="mt-4 grid gap-2">
-            {["Owner", "Analyst", "Campaign Manager", "Client Viewer"].map(role => (
-              <div key={role} className="flex items-center justify-between rounded-[12px] bg-slate-50 px-4 py-3">
-                <span className="text-sm font-bold text-[#172033]">{role}</span>
-                <button className="text-xs font-black text-pink-600 hover:underline">Edit</button>
-              </div>
-            ))}
-          </div>
-        </Panel>
-        
-        <Panel className="p-4 sm:p-5">
-          <div className="flex items-center gap-3">
-            <Mail className="h-5 w-5 text-emerald-600" />
-            <h3 className="text-lg font-black text-[#172033]">Notification Preferences</h3>
-          </div>
-          <div className="mt-4 space-y-3">
-            <label className="flex items-center gap-3">
-              <input type="checkbox" defaultChecked className="h-4 w-4 rounded border-slate-300 text-pink-600" />
-              <span className="text-sm font-bold text-slate-600">Alert margin produk drop</span>
-            </label>
-            <label className="flex items-center gap-3">
-              <input type="checkbox" defaultChecked className="h-4 w-4 rounded border-slate-300 text-pink-600" />
-              <span className="text-sm font-bold text-slate-600">Daily creator performance</span>
-            </label>
-          </div>
-        </Panel>
-      </div>
-    </div>
-  );
+  return <SimpleBoard title="Workspace settings" items={[
+    `Market: ${snapshot.settings?.market ?? "Indonesia"}`,
+    `Preset: ${snapshot.settings?.preset ?? "Beauty & skincare"}`,
+    `Refresh: ${snapshot.settings?.refreshMode ?? "demo_seeded"}`,
+    `Data mode: ${snapshot.settings?.dataMode ?? snapshot.dataMode}`,
+    "Role permission: Owner, Analyst, Campaign Manager, Client Viewer"
+  ]} />;
 }
 
 function DataTable({ title, rows, columns }: { title: string; rows: Array<Record<string, string | number>>; columns: string[] }) {
