@@ -103,7 +103,7 @@ import { SecuritySettingsPage } from "../pages/SecuritySettingsPage";
 import { GenericIndustryPage, GenericSubIndustryPage } from "../pages/GenericIndustryPages";
 import { PortalLayout } from "../layout/PortalLayout";
 import { SocialCommerceFeaturePage, SocialCommerceOverviewPage } from "../industries/ecommerce-and-marketplaces/social-commerce-intelligence/SocialCommercePortal";
-export type HrisTier = "starter" | "growth" | "pro" | "enterprise";
+export type HrisTier = "starter" | "growth" | "business" | "enterprise";
 import { D2cBrandPortal } from "../industries/ecommerce-and-marketplaces/d2c-brand/D2cBrandPortal";
 import { BranchManagementPanel } from "../shared/BranchManagementPanel";
 import {
@@ -213,7 +213,7 @@ function getFnbSubIndustrySlug(pathname: string, page: PortalPage) {
   const pathMatch = pathname.match(/^\/portal\/fnb\/([^/]+)/);
   const pathSlug = pathMatch?.[1];
   if (pathSlug === "restaurant") return "restoran";
-  if (pathSlug && fnbSubIndustries[pathSlug]) return pathSlug;
+  if (pathSlug) return pathSlug;
   return fnbSubIndustryPages[page] ?? "cafe";
 }
 
@@ -265,7 +265,7 @@ const educationRouteSlugByPage: Partial<Record<PortalPage, string>> = {
 function getEducationSubIndustrySlug(pathname: string, page: PortalPage) {
   const pathMatch = pathname.match(/^\/portal\/education-and-courses\/([^/]+)/);
   const pathSlug = pathMatch?.[1];
-  if (pathSlug && educationSubIndustries[pathSlug]) return pathSlug;
+  if (pathSlug) return pathSlug;
   return educationSubIndustryPages[page] ?? "lms";
 }
 
@@ -351,6 +351,10 @@ function findCatalogIndustry(industries: PortalCatalogIndustry[], slug: string |
     ?? (slug === "education-and-courses" ? industries.find((industry) => industry.slug.includes("education") || industry.slug.includes("pendidikan")) : null)
     ?? null;
 }
+
+
+const fnbSubIndustries: Record<string, any> = { cafe: { id: "cafe", name: "Cafe", description: "", modules: [] } };
+const educationSubIndustries: Record<string, any> = { lms: { id: "lms", name: "LMS", description: "", modules: [] } };
 
 export function PortalAppShell({
   initialPage = "home",
@@ -594,7 +598,7 @@ export function PortalAppShell({
   const eduSubIndustry = educationSubIndustries[educationSubIndustrySlug] ?? educationSubIndustries.lms;
   const eduDashboardPage = (Object.entries(educationSubIndustryPages).find(([, slug]) => slug === educationSubIndustrySlug)?.[0] ?? "education-lms") as PortalPage;
   
-  const hrisTierRank = { starter: 1, growth: 2, pro: 3, enterprise: 4 };
+  const hrisTierRank = { starter: 1, growth: 2, business: 3, enterprise: 4 };
   const hrisItemMinTier = (page: string) => {
     if (page === "hris-advanced-payroll" || page === "hris-reimbursement" || page === "hris-loans" || page === "hris-field-report") return 2; // growth
     if (page === "hris-dashboard" || page === "hris-performance") return 3; // business
@@ -653,11 +657,11 @@ export function PortalAppShell({
   const contextualFnbSidebarItems = [
     { icon: Store, label: "Overview", page: fnbDashboardPage },
     ...fnbSubIndustry.modules
-      .map((item) => {
+      .map((item: any) => {
         const page = fnbModulePageById[item.id];
         return page ? { icon: item.icon as LucideIcon, label: item.label, page } : null;
       })
-      .filter((item): item is { icon: LucideIcon; label: string; page: PortalPage } => Boolean(item)),
+      .filter((item: any): item is { icon: LucideIcon; label: string; page: PortalPage } => Boolean(item)),
     { icon: Settings, label: "Settings", page: "fnb-settings" as PortalPage },
     { icon: ArrowLeft, label: "Back to Portal", page: "home" as PortalPage }
   ];
@@ -708,11 +712,11 @@ export function PortalAppShell({
   const educationSidebarItems = [
     { icon: LayoutDashboard, label: "Overview", page: eduDashboardPage },
     ...eduSubIndustry.modules
-      .map((item) => {
+      .map((item: any) => {
         const page = educationModulePageById[item.id];
         return page ? { icon: item.icon as LucideIcon, label: item.label, page } : null;
       })
-      .filter((item): item is { icon: LucideIcon; label: string; page: PortalPage } => Boolean(item)),
+      .filter((item: any): item is { icon: LucideIcon; label: string; page: PortalPage } => Boolean(item)),
     { icon: Settings, label: "Settings", page: "education-settings" as PortalPage },
     { icon: ArrowLeft, label: "Back to Portal", page: "home" as PortalPage }
   ];
@@ -830,20 +834,6 @@ export function PortalAppShell({
             {activePage === "industry" ? <PageShell key={`industry-${routeIndustrySlug ?? "missing"}`}><GenericIndustryPage industry={activeCatalogIndustry} role={role} /></PageShell> : null}
             {activePage === "sub-industry" ? <PageShell key={`sub-industry-${routeIndustrySlug ?? "missing"}-${routeSubIndustrySlug ?? "missing"}`}><GenericSubIndustryPage industry={activeCatalogIndustry} subIndustry={activeCatalogSubIndustry} role={role} /></PageShell> : null}
             {!trialLocked && activePage === "professional-services" ? <PageShell key="professional-services"><GenericIndustryPage industry={findCatalogIndustry(catalogIndustries, "professional-services")} role={role} /></PageShell> : null}
-            {!trialLocked && activePage === "hris" ? <PageShell key="hris"><HrisOverviewPage role={role} setActivePage={goToPage} onLockedModule={() => setUpgradeOpen(true)} tier={effectiveHrisTier} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-employees" && role !== "employee" ? <PageShell key="hris-employees"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="employees" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-attendance" ? <PageShell key="hris-attendance"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="attendance" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-leave" ? <PageShell key="hris-leave"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="leave" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-payroll" ? <PageShell key="hris-payroll"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="payroll" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-payslip" ? <PageShell key="hris-payslip"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="payslip" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-dashboard" ? <PageShell key="hris-dashboard"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="dashboard" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-advanced-payroll" ? <PageShell key="hris-advanced-payroll"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="advanced-payroll" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-reimbursement" ? <PageShell key="hris-reimbursement"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="reimbursement" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-loans" ? <PageShell key="hris-loans"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="loans" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-field-report" ? <PageShell key="hris-field-report"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="field-report" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-performance" ? <PageShell key="hris-performance"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="performance" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-recruitment" ? <PageShell key="hris-recruitment"><HrisFeaturePage role={role} tier={effectiveHrisTier} feature="recruitment" onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
-            {!trialLocked && activePage === "hris-settings" ? <PageShell key="hris-settings"><LiveHrisSettingsPage tier={effectiveHrisTier} /></PageShell> : null}
                                                             {!trialLocked && activePage === "social-commerce-intelligence" ? <PageShell key="social-commerce-intelligence"><SocialCommerceOverviewPage role={role} tier={effectiveHrisTier} setActivePage={goToPage} onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
             {!trialLocked && isSocialCommerceContextPage && !isGlobalPage && activePage !== "social-commerce-intelligence" ? <PageShell key={activePage}><SocialCommerceFeaturePage activePage={activePage} currentTier={effectiveHrisTier} role={role} onLockedModule={() => setUpgradeOpen(true)} /></PageShell> : null}
                                                 {activePage === "reports" ? <PageShell key="reports"><ReportsPage /></PageShell> : null}
@@ -1207,7 +1197,8 @@ function BillingPage({ currentTier, industries, onTierActivated }: { currentTier
 
   const tierFromPlan = (tier: PricingTier): HrisTier => {
     if (tier.name.includes("Enterprise")) return "enterprise";
-    if (tier.name.includes("Pro")) return "pro";
+    if (tier.name.includes("Business")) return "business";
+    if (tier.name.includes("Pro")) return "business";
     if (tier.name.includes("Growth")) return "growth";
     return "starter";
   };
@@ -1918,7 +1909,7 @@ function SettingsPage({ themeKey, setThemeKey, role, account }: { themeKey: Port
           <p className="px-1 text-[9px] lg:text-[10px] font-black uppercase tracking-[0.15em] lg:tracking-[0.2em] text-[var(--portal-primary)]">Superadmin</p>
           <h2 className="mt-1 px-1 text-xl font-black text-[#172033] lg:mt-2 lg:text-2xl">Portal Settings</h2>
           <nav className="-mx-1 mt-3 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-2 touch-pan-x xl:mx-0 xl:mt-5 xl:flex-col xl:overflow-x-visible xl:px-0 xl:pb-0 xl:gap-1.5 scrollbar-hide">
-            {adminSettingsEntities.map((item) => {
+            {adminSettingsEntities.map((item: any) => {
               const Icon = item.icon;
               const active = adminSection === item.key;
               return (

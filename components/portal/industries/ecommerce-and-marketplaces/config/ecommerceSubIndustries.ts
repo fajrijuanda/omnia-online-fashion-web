@@ -2,7 +2,7 @@ import type { PortalCatalogSubIndustry } from "../../../portalCatalog";
 import { socialCommerceModules } from "../social-commerce-intelligence/socialCommerceData";
 
 // Only D2C Brand sub-industry is available in this repository
-export const ecommerceSubIndustries: Record<string, PortalCatalogSubIndustry> = {
+export const ecommerceSubIndustries: Record<string, any> = {
   "d2c-brand": {
     id: "d2c-brand",
     name: "D2C Brand & Principle",

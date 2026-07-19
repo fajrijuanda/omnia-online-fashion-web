@@ -468,5 +468,10 @@ export const portalPagePaths: Record<PortalPage, string> = {
   "education-documents": "/portal/education-and-courses/academic/documents",
   "education-approvals": "/portal/education-and-courses/academic/approvals",
   "education-billing": "/portal/education-and-courses/academic/billing",
-  "education-settings": "/portal/education-and-courses/settings"
+  "education-settings": "/portal/education-and-courses/settings",
+  "ecommerce-d2c-brand": "/portal/ecommerce-and-marketplaces/d2c-brand",
+  "ecommerce-online-fashion": "/portal/ecommerce-and-marketplaces/online-fashion",
+  "ecommerce-beauty-store": "/portal/ecommerce-and-marketplaces/beauty-store",
+  "ecommerce-electronics": "/portal/ecommerce-and-marketplaces/electronics",
+  "ecommerce-digital-products": "/portal/ecommerce-and-marketplaces/digital-products",
 };

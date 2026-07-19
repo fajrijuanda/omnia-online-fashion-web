@@ -31,7 +31,7 @@ export function generateStaticParams() {
   }
 
   for (const subIndustry of Object.values(ecommerceSubIndustries)) {
-    for (const moduleConfig of subIndustry.modules) {
+    for (const moduleConfig of (subIndustry as any).modules || []) {
       slugs.add(`ecommerce-and-marketplaces/${subIndustry.id}/${moduleConfig.id}`);
     }
   }
